@@ -86,50 +86,50 @@ class AnalyticsService:
         files = result.scalars().all()
         return [self._file_to_dict(f) for f in files]
 
-async def _get_upload_trend(
-    self, db: AsyncSession, user_id: str, days: int = 30
-) -> List[Dict]:
-    since = datetime.now(timezone.utc) - timedelta(days=days)
+    async def _get_upload_trend(
+        self, db: AsyncSession, user_id: str, days: int = 30
+    ) -> List[Dict]:
+        since = datetime.now(timezone.utc) - timedelta(days=days)
 
-    day_bucket = func.date_trunc(
-        "day",
-        UploadLog.created_at
-    ).label("day")
+        day_bucket = func.date_trunc(
+            "day",
+            UploadLog.created_at
+        ).label("day")
 
-    result = await db.execute(
-        select(
-            day_bucket,
-            func.count(UploadLog.id)
-                .filter(UploadLog.action == "upload")
-                .label("uploads"),
-            func.count(UploadLog.id)
-                .filter(UploadLog.action == "download")
-                .label("downloads"),
-            func.coalesce(
-                func.sum(UploadLog.file_size_bytes)
-                    .filter(UploadLog.action == "upload"),
-                0
-            ).label("size"),
+        result = await db.execute(
+            select(
+                day_bucket,
+                func.count(UploadLog.id)
+                    .filter(UploadLog.action == "upload")
+                    .label("uploads"),
+                func.count(UploadLog.id)
+                    .filter(UploadLog.action == "download")
+                    .label("downloads"),
+                func.coalesce(
+                    func.sum(UploadLog.file_size_bytes)
+                        .filter(UploadLog.action == "upload"),
+                    0
+                ).label("size"),
+            )
+            .where(
+                UploadLog.user_id == user_id,
+                UploadLog.created_at >= since
+            )
+            .group_by(day_bucket)
+            .order_by(day_bucket)
         )
-        .where(
-            UploadLog.user_id == user_id,
-            UploadLog.created_at >= since
-        )
-        .group_by(day_bucket)
-        .order_by(day_bucket)
-    )
-
-    rows = result.all()
-
-    return [
-        {
-            "date": row.day.strftime("%Y-%m-%d") if row.day else "",
-            "upload_count": int(row.uploads or 0),
-            "total_size_bytes": int(row.size or 0),
-            "download_count": int(row.downloads or 0),
-        }
-        for row in rows
-    ]
+    
+        rows = result.all()
+    
+        return [
+            {
+                "date": row.day.strftime("%Y-%m-%d") if row.day else "",
+                "upload_count": int(row.uploads or 0),
+                "total_size_bytes": int(row.size or 0),
+                "download_count": int(row.downloads or 0),
+            }
+            for row in rows
+        ]
 
     async def _get_file_types(self, db: AsyncSession, user_id: str) -> List[Dict]:
         result = await db.execute(
