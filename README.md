@@ -144,7 +144,7 @@ cloudstore/
 
 ### 1. Clone
 ```bash
-git clone https://github.com/your-username/cloudstore
+git clone https://github.com/chilumulabharath05/cloudstore
 cd cloudstore
 ```
 
@@ -315,47 +315,3 @@ chunks (id, file_id→files, chunk_index, chunk_hash, nonce_b64, ipfs_cid, is_du
 upload_logs (id, user_id→users, file_id→files, action, status, ip_address, created_at)
 shared_links (id, file_id→files, created_by→users, token, permission, expires_at, download_count)
 ```
-
----
-
-## 🎓 Resume Content
-
-### Project Title
-**CloudStore — Distributed Secure Cloud Storage Platform with Deduplication & IPFS**
-
-### ATS-Friendly Bullet Points
-
-- Architected a full-stack distributed cloud storage platform using **FastAPI (Python)**, **Next.js 15 (TypeScript)**, **PostgreSQL**, and **Redis**, featuring AES-256-GCM encryption, SHA-256 chunk hashing, and IPFS decentralized storage via Pinata
-- Designed and implemented a **chunk-based file deduplication engine** using content hashing and Merkle tree verification, reducing storage usage by up to 70% across duplicate file uploads
-- Built a complete **authentication system** with JWT access/refresh token rotation, bcrypt password hashing, IP-based rate limiting, and per-endpoint RBAC using FastAPI dependencies
-- Developed **async file processing pipeline** in Python: file validation → AES-256-GCM encryption (per-chunk unique nonces) → SHA-256 hashing → parallel IPFS upload via Pinata REST API → PostgreSQL persistence
-- Created **real-time analytics dashboard** in Next.js with Recharts — upload trends, deduplication efficiency charts, storage utilization gauges, and file type breakdowns
-- Implemented **secure file sharing** system with time-limited signed JWT share tokens, download count limits, optional password protection, and one-click link revocation
-- Configured complete **DevOps pipeline**: Docker multi-stage builds, Docker Compose orchestration, NGINX reverse proxy with rate limiting, GitHub Actions CI/CD, deployment to Vercel + Render + Neon + Upstash (all free tier)
-
-### Tech Stack Keywords (ATS)
-Python, FastAPI, Next.js, React, TypeScript, Tailwind CSS, PostgreSQL, Redis, IPFS, Pinata, SQLAlchemy, AsyncPG, AES-256, SHA-256, JWT, Bcrypt, Docker, Docker Compose, NGINX, GitHub Actions, CI/CD, Zustand, React Query, Recharts, Pydantic, Uvicorn, REST API, Async/Await, Deduplication, Encryption, Rate Limiting, Vercel, Render, Neon, Upstash
-
-### LinkedIn Project Description
-> Built a production-grade distributed cloud storage platform inspired by Google Drive + Dropbox, adding enterprise-grade security and decentralized storage. Features include AES-256-GCM file encryption (zero-knowledge architecture), content-defined chunk deduplication reducing storage by up to 70%, IPFS distribution via Pinata, SHA-256 integrity verification with Merkle trees, and a real-time analytics dashboard. Deployed on free-tier services: Vercel (frontend), Render (backend), Neon (PostgreSQL), Upstash (Redis).
-
----
-
-## 🔭 Future Enhancements
-
-- WebSocket real-time upload progress (replace polling)
-- Content-defined chunking (Rabin fingerprinting) for better dedup
-- End-to-end encryption with client-side key management
-- Team workspaces and folder sharing
-- File versioning and restore
-- Mobile app (React Native)
-- S3-compatible API endpoint
-- Virus/malware scanning via ClamAV
-- Admin panel with user management
-
----
-
-## 📄 License
-
-MIT © 2024 · Built with ❤️ for the open-source community
-"# distributedsecurestorage" 
