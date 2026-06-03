@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background:  15 23 42;
+    --foreground:  248 250 252;
+    --radius: 0.5rem;
+  }
+  * { @apply border-surface-border; box-sizing: border-box; }
+  body {
+    @apply bg-surface text-slate-100 antialiased;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(148 163 184 / 0.04)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+  }
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { @apply bg-surface; }
+  ::-webkit-scrollbar-thumb { @apply bg-surface-hover rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-brand-600/60; }
+  ::selection { @apply bg-brand-600/30 text-white; }
+}
+
+@layer components {
+  /* ── Glass card ── */
+  .glass {
+    @apply bg-white/[0.03] border border-white/[0.07] backdrop-blur-xl;
+  }
+  .card {
+    @apply glass rounded-2xl p-6 shadow-card
+           hover:shadow-card-hover transition-all duration-300;
+  }
+
+  /* ── Buttons ── */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2
+           font-medium text-sm rounded-xl px-4 py-2.5
+           transition-all duration-200 disabled:opacity-50
+           disabled:cursor-not-allowed select-none;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 hover:bg-brand-500 text-white
+           shadow-glow hover:shadow-glow-lg active:scale-[0.98];
+  }
+  .btn-secondary {
+    @apply btn border border-surface-hover hover:border-brand-500/50
+           hover:bg-brand-500/5 text-slate-300 hover:text-white;
+  }
+  .btn-danger {
+    @apply btn bg-red-600/10 hover:bg-red-600/20 text-red-400
+           border border-red-500/20 hover:border-red-500/40;
+  }
+  .btn-ghost {
+    @apply btn text-slate-400 hover:text-white hover:bg-surface-hover;
+  }
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+  .btn-lg {
+    @apply px-6 py-3 text-base;
+  }
+
+  /* ── Input ── */
+  .input {
+    @apply w-full bg-surface-card border border-surface-hover rounded-xl
+           px-4 py-3 text-white placeholder-slate-500 text-sm
+           focus:outline-none focus:border-brand-500 focus:ring-1
+           focus:ring-brand-500/40 transition-all duration-200;
+  }
+  .label {
+    @apply block text-sm font-medium text-slate-400 mb-1.5;
+  }
+
+  /* ── Badge ── */
+  .badge {
+    @apply inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-medium;
+  }
+  .badge-blue   { @apply badge bg-blue-500/10 text-blue-400 border border-blue-500/20; }
+  .badge-green  { @apply badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20; }
+  .badge-red    { @apply badge bg-red-500/10 text-red-400 border border-red-500/20; }
+  .badge-amber  { @apply badge bg-amber-500/10 text-amber-400 border border-amber-500/20; }
+  .badge-purple { @apply badge bg-purple-500/10 text-purple-400 border border-purple-500/20; }
+  .badge-slate  { @apply badge bg-slate-500/10 text-slate-400 border border-slate-500/20; }
+
+  /* ── Upload zone ── */
+  .upload-zone {
+    @apply rounded-2xl border-2 border-dashed border-surface-hover
+           transition-all duration-300 cursor-pointer;
+    background: radial-gradient(ellipse at center, rgba(59,130,246,0.04) 0%, transparent 70%);
+  }
+  .upload-zone:hover, .upload-zone.active {
+    @apply border-brand-500/60;
+    background: radial-gradient(ellipse at center, rgba(59,130,246,0.08) 0%, transparent 70%);
+    box-shadow: 0 0 30px rgba(59,130,246,0.1);
+  }
+
+  /* ── Progress ── */
+  .progress-fill {
+    background: linear-gradient(90deg, #2563eb, #7c3aed, #2563eb);
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* ── Stat card ── */
+  .stat-card {
+    @apply card flex flex-col gap-3 hover:-translate-y-0.5;
+  }
+}
+
+/* ── Animations ── */
+.animate-fade-in { animation: fadeIn 0.4s ease-out; }
+.animate-slide-up { animation: slideUp 0.4s ease-out; }
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+
+/* ── Sidebar active ── */
+.sidebar-link {
+  @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm
+         font-medium transition-all duration-200 text-slate-400
+         hover:text-white hover:bg-surface-hover;
+}
+.sidebar-link.active {
+  @apply bg-brand-600/15 text-brand-300 border border-brand-500/25;
+}
